@@ -49,7 +49,6 @@ done
 # set up directories
 
 thisdir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-pydir="${thisdir}/py"
 
 # request lock
 
@@ -61,7 +60,7 @@ echo "OK. ${PID_LOCKTOUCH}"
 
 # run script
 
-SCRIPTPATH="${pydir}/${SCRIPTNAME}"
+SCRIPTPATH="${thisdir}/${SCRIPTNAME}"
 echo "python ${SCRIPTPATH} ${EXTRA_ARGS[*]}"
 python "${SCRIPTPATH}" ${EXTRA_ARGS[*]}
 

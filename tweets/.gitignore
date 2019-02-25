@@ -1,2 +1,0 @@
-# run_script.sh creates lockfiles, ignore them
-*.lock
