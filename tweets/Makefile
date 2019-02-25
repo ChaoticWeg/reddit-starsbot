@@ -1,4 +1,10 @@
 #!/bin/make
 
-lockfile:
-	@-[ ! -f lockfile ] && echo Creating lockfile && echo > lockfile
+.PHONY: all datadir
+
+all: datadir
+
+datadir:
+	@-mkdir -p data
+
+
