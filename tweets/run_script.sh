@@ -6,6 +6,9 @@
 ## provides an easy way to treat an entire python script as a critical section
 ## because python blows at concurrency
 ##
+## depends on lockfile-progs:
+##      ubuntu: $ sudo apt-get install -y lockfile-progs
+##
 ## usage: ./run_script.sh --script=<script> [--lockfile=<lockfile>] [args...]
 ##      script:   name of python script to run. required.
 ##      lockfile: name of lockfile to use. optional. default = lockfile
