@@ -1,5 +1,18 @@
 #!/bin/bash
 
+## run_script.sh
+## written by ChaoticWeg (Shawn Lutch)
+##
+## provides an easy way to treat an entire python script as a critical section
+## because python blows at concurrency
+##
+## usage: ./run_script.sh --script=<script> [--lockfile=<lockfile>] [args...]
+##      script:   name of python script to run. required.
+##      lockfile: name of lockfile to use. optional. default = lockfile
+##      args...:  args to pass along to the python script. optional.
+
+# globals
+
 DEFAULT_LOCKNAME=lockfile
 
 # handle command-line arguments
