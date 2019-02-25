@@ -69,7 +69,7 @@ python "${SCRIPTPATH}" ${EXTRA_ARGS[*]}
 echo -ne "killing ${PID_LOCKTOUCH}... "
 kill "${PID_LOCKTOUCH}"
 echo -ne "OK\nreleasing lock: ${LOCKNAME}.lock... "
-lockfile-remove lockfile
+lockfile-remove "${LOCKNAME}"
 echo "OK"
 
 # clean up 
