@@ -5,4 +5,4 @@
 all: install
 
 install: requirements.txt
-	@- python -m pip $@ -r $<
+	@- python3 -m pip $@ -r $<
