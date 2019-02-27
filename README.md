@@ -3,4 +3,4 @@ Features requested by /r/DallasStars subs.
 
 ### To-do
 
-- Tweet unfurler
+- [Tweet unfurler – `unfurl`](https://github.com/ChaoticWeg/reddit-starsbot/tree/unfurl)
