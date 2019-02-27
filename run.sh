@@ -52,11 +52,25 @@ lockfile-touch "${LOCKNAME}" &
 PID_LOCKTOUCH="$!"
 echo "OK. ${PID_LOCKTOUCH}"
 
+###
+###  BEGIN CRITICAL SECTION
+###
+
+# grab credentials from creds/
+
+credsdir="${thisdir}/creds"
+mkdir -p "${credsdir}"      # create if not exist
+find "${credsdir}" -type f -name "*.sh" -exec source {} \;
+
 # run command
 
 COMMAND_TO_RUN="${EXTRA_ARGS[*]}"
 echo "${COMMAND_TO_RUN}"
 eval ${COMMAND_TO_RUN}
+
+###
+###  END CRITICAL SECTION
+###
 
 # release lock
 
