@@ -1,8 +1,5 @@
-# run_script.sh lockfiles
+# run.sh lockfiles
 *.lock
-
-# data
-*.json
 
 # Vim swapfiles
 *.swp
