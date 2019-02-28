@@ -1,5 +1,7 @@
+import tweetslib
+
 def run():
-    pass
+    tweetslib.get_tweet_posts()
 
 if __name__ == "__main__":
     run()
