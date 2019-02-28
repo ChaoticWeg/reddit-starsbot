@@ -60,7 +60,7 @@ echo "OK. ${PID_LOCKTOUCH}"
 
 credsdir="${thisdir}/creds"
 mkdir -p "${credsdir}"      # create if not exist
-find "${credsdir}" -type f -name "*.sh" -exec source {} \;
+for creds_file in $credsdir/*.sh; do source "${creds_file}"; done
 
 # run command
 
