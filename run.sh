@@ -65,8 +65,9 @@ for creds_file in $credsdir/*.sh; do source "${creds_file}"; done
 # run command
 
 COMMAND_TO_RUN="${EXTRA_ARGS[*]}"
-echo "${COMMAND_TO_RUN}"
+echo -ne "${COMMAND_TO_RUN}\n\n"
 eval ${COMMAND_TO_RUN}
+echo -ne "\n"
 
 ###
 ###  END CRITICAL SECTION
