@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 import os
 
 __KEYS = [
@@ -9,6 +10,7 @@ __KEYS = [
 ]
 
 def get():
+    load_dotenv()
     result = {}
 
     for name in __KEYS:
