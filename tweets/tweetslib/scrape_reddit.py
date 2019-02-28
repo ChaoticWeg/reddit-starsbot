@@ -10,7 +10,7 @@ def __get_creds(user_agent=None):
         # get value from environ
         value = os.getenv(name)
         if value is None:
-            raise f"missing value for credential env: {name}"
+            raise Exception(f"missing value for credential env: {name}")
 
         # convert to PRAW kwargs-friendly dict
         name_key = name.lower()[7:]
