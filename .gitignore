@@ -1,3 +1,6 @@
+# helper scripts
+unfurl.sh
+
 # run.sh lockfiles
 *.lock
 
