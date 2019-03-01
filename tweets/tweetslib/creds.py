@@ -10,7 +10,11 @@ __KEYS = [
 ]
 
 def get():
-    load_dotenv()
+    try:
+        load_dotenv()
+    except:
+        pass
+    
     result = {}
 
     for name in __KEYS:
