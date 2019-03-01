@@ -1,6 +1,6 @@
 import json
 
-def read(filename, default=None):
+def read(filename, *, default=None):
     try:
         with open(filename, 'r') as infile:
             return json.load(infile)
