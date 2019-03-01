@@ -1,6 +1,6 @@
 import re
 
-TWEET_RE = r"^https?:\/\/(?:www\.)?twitter\.com\/(?P<user>\w+)\/status\/(?P<tweet_id>[0-9]+)\/?(?:\?.*)?$"
+TWEET_RE="^https?:\/\/(?P<sub>(?:www)|(?:mobile)\.)?twitter\.com\/(?P<user>\w+)\/status\/(?P<tweet_id>[0-9]+)\/?(?P<params>\?.*)?$"
 TWEET_PROG = None
 
 def check_progs():
