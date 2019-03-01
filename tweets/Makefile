@@ -1,10 +1,8 @@
 #!/bin/make
 
-.PHONY: all datadir
+.PHONY: all install
 
-all: datadir
+all: install
 
-datadir:
-	@-mkdir -p data
-
-
+install: requirements.txt
+	@- sudo -H python3 -m pip $@ -r $<

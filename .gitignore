@@ -1,3 +1,9 @@
+# run.sh lockfiles
+*.lock
+
+# credentials
+creds/
+
 # Vim swapfiles
 *.swp
 

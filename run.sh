@@ -1,18 +1,17 @@
 #!/bin/bash
 
-## run_script.sh
+## run.sh
 ## written by ChaoticWeg (Shawn Lutch)
 ##
-## provides an easy way to treat an entire python script as a critical section
-## because python blows at concurrency
+## provides an easy way to treat an entire script as a critical section
+## to make certain scripts block others easily
 ##
 ## depends on lockfile-progs:
 ##      ubuntu: $ sudo apt-get install -y lockfile-progs
 ##
-## usage: ./run_script.sh --script=<script> [--lockfile=<lockfile>] [args...]
-##      script:   name of python script to run. required.
-##      lockfile: name of lockfile to use. optional. default = lockfile
-##      args...:  args to pass along to the python script. optional.
+## usage: ./run.sh [--lockfile=<lockfile>] command...
+##      lockfile     name of lockfile to use. optional. default = lockfile
+##      command...   the command to run
 
 # globals
 
@@ -21,21 +20,16 @@ DEFAULT_LOCKNAME=lockfile
 # handle command-line arguments
 
 EXTRA_ARGS=()
-SCRIPTNAME=
 LOCKNAME=
 
 while (( "$#" )); do
     case "${1}" in
 
-        # --script=<script>
-        --script=*) SCRIPTNAME=${1/--script=/''}; shift;;
-        --script) SCRIPTNAME=${2}; shift; shift;;
-
         # --lockfile=<lockfile> (default: lockfile)
         --lockfile=*) LOCKNAME=${1/--lockfile=/''}; shift;;
         --lockfile) LOCKNAME=${2}; shift; shift;;
 
-        # not handled? toss it on the pile to pass to python later
+        # not handled? toss it on the pile to handle later
         *) EXTRA_ARGS+=("${1}"); shift;;
 
     esac
@@ -43,13 +37,12 @@ done
 
 # check user input
 
-[[ -z ${SCRIPTNAME} ]] && echo "fatal: no script given. use --script=<script>" && exit 1;
 [[ -z ${LOCKNAME} ]] && LOCKNAME="${DEFAULT_LOCKNAME}"
 
-# set up directories
+# set up directories and pushd into this one
 
 thisdir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-pydir="${thisdir}/py"
+pushd "${thisdir}" >/dev/null 2>&1
 
 # request lock
 
@@ -59,18 +52,33 @@ lockfile-touch "${LOCKNAME}" &
 PID_LOCKTOUCH="$!"
 echo "OK. ${PID_LOCKTOUCH}"
 
-# run script
+###
+###  BEGIN CRITICAL SECTION
+###
 
-SCRIPTPATH="${pydir}/${SCRIPTNAME}"
-echo "python ${SCRIPTPATH} ${EXTRA_ARGS[*]}"
-python "${SCRIPTPATH}" ${EXTRA_ARGS[*]}
+# grab credentials from creds/
+
+credsdir="${thisdir}/creds"
+mkdir -p "${credsdir}"      # create if not exist
+for creds_file in $credsdir/*.sh; do source "${creds_file}"; done
+
+# run command
+
+COMMAND_TO_RUN="${EXTRA_ARGS[*]}"
+echo -ne "${COMMAND_TO_RUN}\n\n"
+eval ${COMMAND_TO_RUN}
+echo -ne "\n"
+
+###
+###  END CRITICAL SECTION
+###
 
 # release lock
 
 echo -ne "killing ${PID_LOCKTOUCH}... "
 kill "${PID_LOCKTOUCH}"
 echo -ne "OK\nreleasing lock: ${LOCKNAME}.lock... "
-lockfile-remove lockfile
+lockfile-remove "${LOCKNAME}"
 echo "OK"
 
 # clean up 
@@ -79,4 +87,4 @@ unset EXTRA_ARGS
 unset SCRIPTNAME
 unset SCRIPTPATH
 unset LOCKNAME
-
+popd >/dev/null 2>&1
