@@ -44,6 +44,10 @@ done
 thisdir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 pushd "${thisdir}" >/dev/null 2>&1
 
+# print timestamp
+
+echo "run: $(date +"%F %X")"
+
 # request lock
 
 echo -ne "requesting lock: ${LOCKNAME}.lock... "
